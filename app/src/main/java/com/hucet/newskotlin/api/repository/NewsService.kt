@@ -6,7 +6,7 @@ import retrofit2.Response
 import retrofit2.http.POST
 import retrofit2.http.Query
 
-interface NewsRepository {
+interface NewsService {
     @POST("top.json")
     fun getRedditNews(@Query("before") before: String,
                       @Query("after") after: String,

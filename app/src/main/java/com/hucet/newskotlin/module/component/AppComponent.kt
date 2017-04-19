@@ -1,10 +1,15 @@
 package com.hucet.newskotlin.module.component
 
 import com.hucet.newskotlin.module.AppModule
-import com.hucet.newskotlin.module.service.RetrofitModule
+import com.hucet.newskotlin.module.NewsModule
+import com.hucet.newskotlin.module.NetworkModule
+import com.hucet.todo.NewsFragment
 import dagger.Component
+import javax.inject.Singleton
 
-@Component(modules = arrayOf(AppModule::class, RetrofitModule::class))
-class AppComponent {
-
+@Singleton
+@Component(modules = arrayOf(
+        AppModule::class, NetworkModule::class))
+interface AppComponent {
+    fun plus(newsModule: NewsModule): NewsComponent
 }
