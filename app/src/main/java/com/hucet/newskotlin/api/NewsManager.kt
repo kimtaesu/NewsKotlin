@@ -3,7 +3,7 @@ package com.hucet.newskotlin.api
 import com.hucet.newskotlin.api.repository.NewsService
 import com.hucet.newskotlin.api.request.NewsRequest
 import com.hucet.newskotlin.api.response.NewsResponse
-import com.hucet.newskotlin.module.scope.NewsScope
+import com.hucet.newskotlin.module.data.component.scope.NewsScope
 import com.hucet.todo.extension.onDefaultThread
 import com.hucet.todo.model.RedditNewsItem
 import io.reactivex.Observable

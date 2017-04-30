@@ -68,7 +68,9 @@ dependencies {
     compile bindDependencies.butterknife
     annotationProcessor bindDependencies.butterknifeAnnoProcessor
 //    google auto factory
-    compile bindDependencies.googleFactory
+//    compile bindDependencies.googleFactory
+
+    compile dataDependencies.picasso
 //    Test
     testCompile 'junit:junit:4.12'
     testCompile "org.assertj:assertj-core:1.7.0"

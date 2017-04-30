@@ -2,12 +2,7 @@ package com.hucet.newskotlin
 
 import android.app.Application
 import com.hucet.newskotlin.api.request.NewsRequest
-import com.hucet.newskotlin.module.AppModule
-import com.hucet.newskotlin.module.NetworkModule
-import com.hucet.newskotlin.module.NewsModule
-import com.hucet.newskotlin.module.component.AppComponent
-import com.hucet.newskotlin.module.component.DaggerAppComponent
-import com.hucet.newskotlin.module.component.NewsComponent
+import com.hucet.newskotlin.module.data.component.*
 import timber.log.Timber
 
 class MyApplication : Application() {

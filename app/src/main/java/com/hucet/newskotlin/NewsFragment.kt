@@ -2,6 +2,7 @@ package com.hucet.todo
 
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v4.util.SparseArrayCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,21 +12,27 @@ import com.hucet.newskotlin.MyApplication
 import com.hucet.newskotlin.R
 import com.hucet.newskotlin.api.NewsManager
 import com.hucet.newskotlin.api.request.NewsRequest
-import com.hucet.newskotlin.module.NetworkModule
-import com.hucet.newskotlin.module.NewsModule
-import com.hucet.newskotlin.module.component.AppComponent
-import com.hucet.newskotlin.module.component.NewsComponent
+import com.hucet.newskotlin.module.data.component.NetworkModule
+import com.hucet.newskotlin.module.data.component.NewsModule
+import com.hucet.newskotlin.module.data.component.AppComponent
+import com.hucet.newskotlin.module.data.component.NewsComponent
+import com.hucet.newskotlin.view.NewsAdapter
+import com.hucet.newskotlin.view.viewholder.*
+import com.hucet.todo.model.RedditNewsItem
+import kotlinx.android.synthetic.main.fragment_content.*
 import javax.inject.Inject
 
 class NewsFragment : Fragment() {
+    var dataset: List<RedditNewsItem> = ArrayList<RedditNewsItem>()
+    val delegateAdapters: SparseArrayCompat<ViewTypeDelegateAdapter> = SparseArrayCompat()
 
     @Inject
     lateinit var newsManager: NewsManager;
-
+    lateinit var newsComponent: NewsComponent
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        MyApplication.getNewsComponent(NewsRequest()).inject(this)
-        requestNews()
+        newsComponent = MyApplication.getNewsComponent(NewsRequest())
+        newsComponent.inject(this)
     }
 
     override fun onViewCreated(view: View?, savedInstanceState: Bundle?) {
@@ -38,17 +45,31 @@ class NewsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        init()
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
     }
 
+    fun init() {
+        delegateAdapters.apply {
+            put(AdapterConstants.ITEM, NewsViewHolderItem())
+            put(AdapterConstants.LOADING, NewsViewHolderLoading())
+        }
+
+        news_list.apply {
+            val linearLayout = LinearLayoutManager(context)
+            layoutManager = linearLayout
+            adapter = NewsAdapter(dataset, delegateAdapters)
+        }
+        requestNews()
+    }
 
     private fun requestNews() {
         newsManager.getNews()
                 .subscribe({
-                    Log.e("!!!!!!!!!!", "aaaaaaaa")
+                    (news_list.adapter as NewsAdapter).addNewsItem(it)
                 }, {
                     Log.e("!!!!!!!!!!!!!", "bbbbbbbbbbbbbbb")
                 })

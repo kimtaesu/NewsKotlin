@@ -3,15 +3,8 @@ package com.hucet.todo.model
 import android.os.Parcel
 import android.os.Parcelable
 import com.hucet.newskotlin.api.response.NewsDataResponse
-
-interface ViewType {
-    fun getViewType(): Int
-}
-
-object AdapterConstants {
-    val NEWS = 1
-    val LOADING = 2
-}
+import com.hucet.newskotlin.model.NewsSuperModel
+import com.hucet.newskotlin.view.viewholder.AdapterConstants
 
 data class RedditNews(
         val after: String,
@@ -42,9 +35,9 @@ data class RedditNewsItem(
         val created: Long,
         val thumbnail: String,
         val url: String?
-) : ViewType, Parcelable {
+) : NewsSuperModel, Parcelable {
 
-    override fun getViewType() = AdapterConstants.NEWS
+    override fun getViewType() = AdapterConstants.ITEM
 
     companion object {
         @JvmField val CREATOR: Parcelable.Creator<RedditNewsItem> = object : Parcelable.Creator<RedditNewsItem> {
