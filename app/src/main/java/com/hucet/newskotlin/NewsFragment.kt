@@ -8,6 +8,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.hucet.newskotlin.MyApplication
 import com.hucet.newskotlin.R
 import com.hucet.newskotlin.api.NewsManager
@@ -71,7 +72,8 @@ class NewsFragment : Fragment() {
                 .subscribe({
                     (news_list.adapter as NewsAdapter).addNewsItem(it)
                 }, {
-                    Log.e("!!!!!!!!!!!!!", "bbbbbbbbbbbbbbb")
+                    Toast.makeText(context, "Can't load reddit items", Toast.LENGTH_SHORT).show()
+
                 })
     }
 }
